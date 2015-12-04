@@ -1,0 +1,26 @@
+#
+# Driver IC 2605 to control motor
+#
+
+config HAPTICS_DRV2605
+    bool "Driver IC 2605 to control motor"
+    depends on I2C=y
+    default n
+    select REGMAP_I2C
+    help
+        Say yes here to provide support for motor driver IC 2605
+
+if HAPTICS_DRV2605
+choice
+    prompt "motor types"
+    depends on HAPTICS_DRV2605
+    default HAPTICS_LRA_SEMCO1030
+config HAPTICS_LRA_SEMCO1030
+    bool "HAPTICS_LRA_SEMCO1030"
+
+config HAPTICS_ERM_EVOWAVE_Z4TJGB1512658
+    bool "HAPTICS_ERM_EVOWAVE_Z4TJGB1512658"
+
+endchoice
+endif
+

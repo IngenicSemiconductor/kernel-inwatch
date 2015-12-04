@@ -1,0 +1,55 @@
+#
+# Touchscreen driver msg22s configuration
+#
+
+config TOUCHSCREEN_MSG22S
+       tristate "Touchscreen msg22s"
+       depends on I2C && M200_SUPPORT_TSC
+       default n
+       help
+       use for weilaihuawen board
+
+if TOUCHSCREEN_MSG22S
+
+config MSG22S_EXT_FUNC
+	 bool "msg22s extra function"
+	 depends on TOUCHSCREEN_MSG22S
+	 default n
+	 help
+		the msg22s type IC extra function:
+		l.open debug log
+		2.tp firmware upgrade control
+
+if MSG22S_EXT_FUNC
+
+config UPDATE_FIRMWARE_BY_SW_ID
+	 bool "msg22s auto upgrade"
+	 depends on MSG22S_EXT_FUNC
+	 default n
+	 help
+	 1.the msg22s type IC auto upgrade as your version large than the older
+	 2.you can echo the file which is xxx.bin(the path should be completed) to the sysfs interface to update the firmware.
+
+config ENABLE_TOUCH_DRIVER_DEBUG
+	 bool "msg22s debug by print the log"
+	 depends on MSG22S_EXT_FUNC
+	 default n
+	 help
+	 The below compile option is used to enable the output log mechanism while touch device driver is running.
+	 If this compile option is not defined, the function for output log will be disabled.
+	 see the mstar_drv_common.h explain.
+
+config ENABLE_FIRMWARE_DATA_LOG
+	 bool "msg22s firmware debug by print the log"
+	 depends on MSG22S_EXT_FUNC
+	 default n
+	 help
+	 The below compile option is used to enable debug mode data log for firmware.
+	 Please make sure firmware support debug mode data log first, then you can enable this compile option.
+	 Else, please disbale this compile option.
+	 the firmware may not be support debug mode to print the data log, if it not support, i2c may be print error. but it don't matter for us to use the tp.
+	 see the mstar_drv_common.h explain.
+
+
+endif
+endif

@@ -1,0 +1,79 @@
+menuconfig SND_ASOC_INGENIC
+	tristate "ASoC support for Ingenic"
+	depends on JZRISC && SND_SOC
+	help
+		Say 'Y' to enable Alsa drivers of xburst.
+
+if SND_ASOC_INGENIC
+
+config SND_ASOC_JZ_AIC
+	tristate
+
+config SND_ASOC_JZ_AIC_SPDIF
+        tristate
+	select SND_ASOC_JZ_AIC
+
+config SND_ASOC_JZ_AIC_I2S
+	tristate
+	select SND_ASOC_JZ_AIC
+config SND_ASOC_JZ_DUMP_CDC
+	tristate
+
+config SND_ASOC_JZ_PCM
+	tristate
+	select SND_ASOC_JZ_DUMP_CDC
+
+config SND_ASOC_JZ_ICDC_D1
+	tristate
+	select SND_ASOC_JZ_AIC
+choice
+	prompt "Ingenic asoc sound card select"
+
+config SND_ASOC_INGENIC_DORADO_ICDC
+	tristate "Audio support for dorado"
+	depends on SOC_M200
+	select SND_ASOC_JZ_AIC_I2S
+	select SND_ASOC_JZ_ICDC_D1
+	select SND_ASOC_JZ_PCM
+	help
+	  Say Y if you want to add audio support for M200 Dorado
+	  reference board with internal codec
+config SND_ASOC_INGENIC_NEWTON_ICDC
+	tristate "Audio support for newton"
+	depends on SOC_M200
+	select SND_ASOC_JZ_AIC_I2S
+	select SND_ASOC_JZ_ICDC_D1
+	select JZ_ASOC_CODEC_HP_INSERT_REV
+	select SND_ASOC_JZ_PCM
+	help
+	  Say Y if you want to add audio support for M200 Newton
+	  reference board with internal codec
+config SND_ASOC_INGENIC_WATCH_ICDC
+	tristate "Audio support for watch"
+	depends on SOC_M200
+	select SND_ASOC_JZ_AIC_I2S
+	select SND_ASOC_JZ_ICDC_D1
+	select SND_ASOC_JZ_PCM
+	help
+	  Say Y if you want to add audio support for M200 Watch
+	  reference board with internal codec
+endchoice
+config JZ_ASOC_DMA_AUTO_CLR_DRT_MEM
+	bool "JZ audio dma clear auto dirty memory"
+	help
+	  Say Y if you audio dma clear auto dirty memory, so you would not
+	  clear by slience_threshold set by user app
+config JZ_ASOC_DMA_HRTIMER_MODE
+	bool "JZ audio dma cyclic dma with hrtimer callback mode"
+	depends on HIGH_RES_TIMERS
+	default n
+	help
+	  Say Y if you want suport sandard cyclic dma interface, Say N, that
+	  dma cyclic interface is not standard
+config JZ_ASOC_CODEC_HP_INSERT_REV
+	bool "JZ headphone jack detect is Reversal"
+	depends on SND_ASOC_JZ_ICDC_D1
+	default n
+	help
+	  Say Y if you headphone jack detect is Reversal
+endif

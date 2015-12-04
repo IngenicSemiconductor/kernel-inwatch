@@ -1,0 +1,121 @@
+
+Discarded input sections
+
+ .reginfo       0x0000000000000000       0x18 src/start.o
+ .reginfo       0x0000000000000000       0x18 src/delay.o
+ .comment       0x0000000000000000       0x1e src/delay.o
+ .gnu.attributes
+                0x0000000000000000       0x10 src/delay.o
+ .reginfo       0x0000000000000000       0x18 src/main.o
+ .comment       0x0000000000000000       0x1e src/main.o
+ .gnu.attributes
+                0x0000000000000000       0x10 src/main.o
+ .reginfo       0x0000000000000000       0x18 src/mcu_ops.o
+ .comment       0x0000000000000000       0x1e src/mcu_ops.o
+ .gnu.attributes
+                0x0000000000000000       0x10 src/mcu_ops.o
+ .reginfo       0x0000000000000000       0x18 src/gpio.o
+ .comment       0x0000000000000000       0x1e src/gpio.o
+ .gnu.attributes
+                0x0000000000000000       0x10 src/gpio.o
+ .reginfo       0x0000000000000000       0x18 src/uart.o
+ .comment       0x0000000000000000       0x1e src/uart.o
+ .gnu.attributes
+                0x0000000000000000       0x10 src/uart.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+tcsm_bank0       0x00000000f4000000 0x0000000000001f3c rw
+tcsm_bank3_1     0x00000000f4001f3c 0x00000000000000c4 rw
+tcsm_bank4_0     0x00000000f4002000 0x00000000000000c4 rw
+tcsm_bank4_1     0x00000000f40020c4 0x0000000000000730 rw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+
+.tcsm_bank0     0x00000000f4000000      0x640
+                0x00000000f4000000                . = ALIGN (0x4)
+ *(.text)
+ .text          0x00000000f4000000      0x220 src/start.o
+                0x00000000f4000000                _reset
+                0x00000000f4000100                _intr
+                0x00000000f4000108                _start
+                0x00000000f4000138                _intr_entry
+ .text          0x00000000f4000220       0x10 src/delay.o
+                0x00000000f4000220                mcu_delay
+ .text          0x00000000f4000230       0x30 src/main.o
+ .text          0x00000000f4000260       0x60 src/mcu_ops.o
+                0x00000000f4000260                trap_entry
+ .text          0x00000000f40002c0       0xd0 src/gpio.o
+                0x00000000f40002c0                gpio_set_value
+                0x00000000f40002f0                gpio_get_value
+                0x00000000f4000318                gpio_direction_input
+                0x00000000f4000354                gpio_direction_output
+ .text          0x00000000f4000390      0x290 src/uart.o
+                0x00000000f4000390                uart_init
+                0x00000000f40003bc                handle_uart_irq
+ *(.data)
+ .data          0x00000000f4000620        0x0 src/start.o
+ .data          0x00000000f4000620        0x0 src/delay.o
+ .data          0x00000000f4000620        0x0 src/main.o
+ .data          0x00000000f4000620        0x0 src/mcu_ops.o
+ .data          0x00000000f4000620        0x0 src/gpio.o
+ .data          0x00000000f4000620        0x0 src/uart.o
+                0x00000000f4000620                _gp = ALIGN (0x4)
+ *(.sdata)
+ *(.sdata.*)
+ *(.sbss)
+ *(.bss)
+ .bss           0x00000000f4000620        0x0 src/start.o
+ .bss           0x00000000f4000620        0x0 src/delay.o
+ .bss           0x00000000f4000620       0x10 src/main.o
+ .bss           0x00000000f4000630       0x10 src/mcu_ops.o
+                0x00000000f4000630                need_send_mailbox
+ .bss           0x00000000f4000640        0x0 src/gpio.o
+ .bss           0x00000000f4000640        0x0 src/uart.o
+ *(.scommon)
+ *(.rodata)
+
+.text.startup   0x00000000f4000640       0x94
+ .text.startup  0x00000000f4000640       0x94 src/main.o
+                0x00000000f4000640                main
+
+.tcsm_bank3_1
+ *(.tcsm_data3)
+
+.tcsm_bank4_0
+ *(.tcsm_data4)
+
+.tcsm_bank4_1
+ *(.tcsm_bank4_1)
+
+/DISCARD/
+ *(COMMON)
+ *(.pdri)
+ *(.comment)
+ *(.gnu.attributes)
+ *(.reginfo)
+LOAD src/start.o
+LOAD src/delay.o
+LOAD src/main.o
+LOAD src/mcu_ops.o
+LOAD src/gpio.o
+LOAD src/uart.o
+OUTPUT(tmp.elf elf32-tradlittlemips)
+
+.pdr            0x0000000000000000      0x140
+ .pdr           0x0000000000000000        0x0 src/start.o
+ .pdr           0x0000000000000000       0x20 src/delay.o
+ .pdr           0x0000000000000020       0x40 src/main.o
+ .pdr           0x0000000000000060       0x20 src/mcu_ops.o
+ .pdr           0x0000000000000080       0x80 src/gpio.o
+ .pdr           0x0000000000000100       0x40 src/uart.o
+
+.mdebug.abi32   0x0000000000000000        0x0
+ .mdebug.abi32  0x0000000000000000        0x0 src/delay.o
+ .mdebug.abi32  0x0000000000000000        0x0 src/main.o
+ .mdebug.abi32  0x0000000000000000        0x0 src/mcu_ops.o
+ .mdebug.abi32  0x0000000000000000        0x0 src/gpio.o
+ .mdebug.abi32  0x0000000000000000        0x0 src/uart.o

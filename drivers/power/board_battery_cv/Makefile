@@ -1,0 +1,1 @@
+obj-$(CONFIG_BATTERY_CV_BOARD_AW808) += aw808_cv.o

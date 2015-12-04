@@ -1,0 +1,11 @@
+choice
+	prompt "Select hardware version"
+	depends on WATCH_SOLAR
+	default SOLAR_HW_V10
+
+config SOLAR_HW_V10
+       bool "solar hardware version v1.0"
+       depends on WATCH_SOLAR
+
+endchoice
+

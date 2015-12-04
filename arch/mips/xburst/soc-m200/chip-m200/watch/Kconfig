@@ -1,0 +1,58 @@
+choice
+	prompt "BOARD type"
+	depends on BOARD_WATCH
+	default WATCH_NEWTON2
+
+
+config WATCH_NEWTON2
+       bool "watch newton2"
+       depends on BOARD_WATCH
+
+config WATCH_AW808
+       bool "watch aw808"
+       depends on BOARD_WATCH
+
+config WATCH_ACRAB
+       bool "watch acrab"
+       depends on BOARD_WATCH
+
+config WATCH_SOLAR
+       bool "watch solar"
+       depends on BOARD_WATCH
+endchoice
+
+if WATCH_AW808
+source "arch/mips/xburst/soc-m200/chip-m200/watch/aw808/Kconfig"
+endif
+if WATCH_SOLAR
+source "arch/mips/xburst/soc-m200/chip-m200/watch/solar/Kconfig"
+endif
+
+config BOARD_NAME
+	string "BOARD_NAME"
+	default "newton2" if WATCH_NEWTON2
+	default "aw808" if WATCH_AW808
+	default "acrab" if WATCH_ACRAB
+	default "solar" if WATCH_SOLAR
+
+config ROOTLIST
+	bool "Export hardware information to proc/hardware/list"
+    default y
+	help
+      Export hardware information to proc/hardware/list,
+      When boot on Android then read this file and configure system
+
+config BLUETOOTH_NAME
+	string  "export bluetooth chip name"
+    depends on ROOTLIST
+    help
+      Export bluetooth chip name information to proc/hardware/list,
+      format : bluetooth.chip:bcm20710
+
+config DEVICE_VENDOR_NAME
+	string  "export device vendor name"
+	depends on ROOTLIST
+	default "ingenic"
+	help
+      Export bluetooth chip name information to proc/hardware/list,
+      format : system.vendor:aw808

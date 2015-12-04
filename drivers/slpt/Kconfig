@@ -1,0 +1,72 @@
+menu "Slpt Drivers"
+
+config SLPT
+	bool "slpt driver"
+	help
+
+config FB_DISPLAY_ALWAYS_ON
+	bool "FB_DISPLAY_ALWAYS_ON"
+	depends on FB_JZ_V12
+	default n
+
+config LCD_BRIGHTNESS_ALWAYS_ON
+	bool "LCD_BRIGHTNESS_ALWAYS_ON"
+	default n
+	depends on BACKLIGHT_CLASS_DEVICE
+	help
+	  Say Y if you do not want to keep lcd brightness always on.
+
+config LCD_BRIGHTNESS_ALWAYS_ON_LEVEL
+	int "LCD_BRIGHTNESS_ALWAYS_ON_LEVEL"
+	default 102
+	depends on LCD_BRIGHTNESS_ALWAYS_ON
+	help
+	  The lowest level of brightness (threshold brightness level), when LCD_BRIGHTNESS_ALWAYS_ON is selected.
+	  The default value 102 is assume the max brightness is 255.
+
+config SLPT_MAP_TO_KSEG2
+	bool "slpt will map to kseg2 address"
+	depends on SLPT
+	default y
+
+config SLPT_BUILT_IN_FIRMWARE
+	bool "slpt app will built-in kernel"
+	depends on SLPT
+	default y
+
+config SLPT_SHUTDOWN
+    bool "entry slpt mode when system low-power shutdown"
+    default n
+    depends on SLPT
+    help
+      entry slpt mode when system low-power shutdown
+
+config SLPT_POWERDOWN_DEVICE
+    bool "Power down some device when entry slpt mode"
+    default n
+    depends on SLPT
+    help
+	  In order to equipment used for longer time
+	  We will shut down some devices
+
+config SLPT_LOW_BATTERY_VOLTAGE
+	int "low battery voltage(mV) value for slpt"
+	default 3624
+	depends on SLPT
+
+config SLPT_LOW_BATTERY_WARN_VOLTAGE
+	int "low battery warn voltage(mV) value for slpt"
+	default 3408
+	depends on SLPT
+
+config SLPT_CHARGER_GPIO
+	int "charger gpio for slpt"
+	default -1
+	depends on SLPT
+
+config SLPT_CHARGER_LEVEL
+	int "charger gpio valid level for slpt"
+	default -1
+	depends on SLPT
+
+endmenu

@@ -1,0 +1,11 @@
+
+config SENSORS_MMA955XL_I2C
+        tristate "Freescale MMA955XL smart sensor  driver"
+        depends on I2C
+        default n
+
+config SENSORS_MMA955XL_SPI
+        tristate "Freescale MMA955XL smart sensor  driver"
+        depends on SPI
+        default n
+
